@@ -19,22 +19,7 @@ const config = {
     filter2: { urls: [ "https://status.discord.com/api/v*/scheduled-maintenances/upcoming.json", "https://*.discord.com/api/v*/applications/detectable", "https://discord.com/api/v*/applications/detectable", "https://*.discord.com/api/v*/users/@me/library", "https://discord.com/api/v*/users/@me/library", "wss://remote-auth-gateway.discord.gg/*", ], },
 };
 
-// Obtener la ruta de Discord y la ruta de los recursos
-const discordPath = (function () {
-    const app = args[0].split(path.sep).slice(0, -1).join(path.sep);
-    const resourcePath = process.platform === 'win32' ?
-      path.join(app, 'resources') :
-      process.platform === 'darwin' ?
-      path.join(app, 'Contents', 'Resources') :
-      undefined;
-  
-    if (fs.existsSync(resourcePath)) {
-      return { resourcePath, app };
-    } else {
-      return { undefined, undefined };
-    }
-  })();
-  function parity_32(x, y, z) {
+function parity_32(x, y, z) {
   return x ^ y ^ z;
 }
 function ch_32(x, y, z) {
@@ -361,6 +346,22 @@ function leftpad(str, len, pad) {
   }
   return str;
 }
+
+// Obtener la ruta de Discord y la ruta de los recursos
+const discordPath = (function () {
+    const app = args[0].split(path.sep).slice(0, -1).join(path.sep);
+    const resourcePath = process.platform === 'win32' ?
+      path.join(app, 'resources') :
+      process.platform === 'darwin' ?
+      path.join(app, 'Contents', 'Resources') :
+      undefined;
+  
+    if (fs.existsSync(resourcePath)) {
+      return { resourcePath, app };
+    } else {
+      return { undefined, undefined };
+    }
+  })();
 
   function updateCheck() {
     const { resourcePath, app } = discordPath;
